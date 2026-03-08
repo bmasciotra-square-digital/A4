@@ -1,21 +1,21 @@
 import pytest
 import math
 
-import bbs
+from bbs.bbs import generate_prime, blum_blum_shub
 
 
 @pytest.fixture
 def setup():
-    p = bbs.generate_prime()
-    q = bbs.generate_prime()
-    return bbs.blum_blum_shub(p, q)
+    p = generate_prime()
+    q = generate_prime()
+    return blum_blum_shub(p, q)
 
 
 @pytest.fixture
 def large_prime():
-    p = bbs.generate_prime()
-    q = bbs.generate_prime()
-    return bbs.blum_blum_shub(p, q, 2048)
+    p = generate_prime()
+    q = generate_prime()
+    return blum_blum_shub(p, q, 2048)
 
 
 def test_bbs_success(setup):
@@ -23,10 +23,10 @@ def test_bbs_success(setup):
 
 
 def test_bbs_success_large_bits():
-    p = bbs.generate_prime()
-    q = bbs.generate_prime()
+    p = generate_prime()
+    q = generate_prime()
 
-    value = bbs.blum_blum_shub(p, q, 1024)
+    value = blum_blum_shub(p, q, 1024)
 
     assert value.bit_length() >= 1024
 
@@ -131,15 +131,22 @@ def test_maurer_universal(large_prime, l: int = 3):
 
     # Configure the variance and expected values based on the block length
     match l:
-        case 1: expected, variance = 0.7326495, 0.690
-        case 2: expected, variance = 1.5374383, 1.338
-        case 3: expected, variance = 2.4016068, 1.901
-        case 4: expected, variance = 3.3112247, 2.358
-        case 5: expected, variance = 4.2534266, 2.705
-        case 6: expected, variance = 5.2177052, 2.954
-        case 7: expected, variance = 6.1962507, 3.125
-        case _: raise ValueError(f"Unsupported block length l={l}") # fallback
-
+        case 1:
+            expected, variance = 0.7326495, 0.690
+        case 2:
+            expected, variance = 1.5374383, 1.338
+        case 3:
+            expected, variance = 2.4016068, 1.901
+        case 4:
+            expected, variance = 3.3112247, 2.358
+        case 5:
+            expected, variance = 4.2534266, 2.705
+        case 6:
+            expected, variance = 5.2177052, 2.954
+        case 7:
+            expected, variance = 6.1962507, 3.125
+        case _:
+            raise ValueError(f"Unsupported block length l={l}")  # fallback
 
     sigma = math.sqrt(variance / k)
     z = (fn - expected) / sigma

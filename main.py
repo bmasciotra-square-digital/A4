@@ -1,7 +1,7 @@
 from bbs import bbs
+from task_one.task_one import task_one
+from task_two.task_two import task_two
 
 if __name__ == '__main__':
-    p = bbs.generate_prime()
-    q = bbs.generate_prime()
-
-    random = bbs.blum_blum_shub(p, q)
+    task_one()
+    task_two()
