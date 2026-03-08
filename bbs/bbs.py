@@ -79,7 +79,7 @@ def generate_seed(n: int) -> int:
             return s
 
 
-def blum_blum_shub(p: int, q: int) -> int:
+def blum_blum_shub(p: int, q: int, bit_count=256) -> int:
     # p and q MUST adhere to the following:
     # 1. Be prime numbers
     # 2. Be at least 256 bits
@@ -88,12 +88,14 @@ def blum_blum_shub(p: int, q: int) -> int:
     n = p * q
     seed = generate_seed(n)
 
-    bits = "1"  # force to 256 bits
+    candidate = ""  # force to 256 bits
     x = pow(seed, 2, n)
 
-    for i in range(255):
+    for _ in range(bit_count):
         x = pow(x, 2, n)
-        bits += str(x % 2)
+        candidate += str(x % 2)
 
-    return int(bits, 2)
-    # find the seed so that n is relatively prime to it
+    result = int(candidate, 2)
+    result |= (1 << (bit_count - 1))  # force 256-bit output
+
+    return result
