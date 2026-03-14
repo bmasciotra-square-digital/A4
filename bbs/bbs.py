@@ -2,7 +2,6 @@ import secrets
 
 MODULUS = 4
 EXPECTED_REMAINDER = 3
-MIN_BBS_BITS = 256
 RELATIVELY_PRIME = 1
 
 
@@ -49,11 +48,11 @@ def is_congruent_mod_four(value: int) -> bool:
     return value % MODULUS == EXPECTED_REMAINDER
 
 
-def generate_prime() -> int:
-    generated = secrets.randbits(MIN_BBS_BITS)
+def generate_prime(bbs_bits = 256) -> int:
+    generated = secrets.randbits(bbs_bits)
 
     # Force 256-bit length
-    generated |= (1 << (MIN_BBS_BITS - 1))
+    generated |= (1 << (bbs_bits - 1))
 
     # Force odd
     generated |= 1
