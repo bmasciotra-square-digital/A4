@@ -1,6 +1,6 @@
 from Crypto.Random import get_random_bytes
 
-from aes.aes import encrypt, decrypt
+from aes.aes import AES256
 from bbs.bbs import blum_blum_shub, generate_prime
 
 
@@ -14,9 +14,12 @@ def task_two():
     key = blum_blum_shub(p, q, 256).to_bytes(32, byteorder='big')
 
     message = "hello world"
+    aes = AES256(key, iv)
 
-    encrypted = encrypt(message, key, iv)
+    encrypted = aes.encrypt(message.encode())
     print(f"{encrypted=}")
 
-    decrypted = decrypt(encrypted, key, iv)
+    decrypted = aes.decrypt(encrypted).decode()
     print(f"{decrypted=}")
+
+    return aes
