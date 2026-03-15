@@ -2,6 +2,8 @@ from bbs.bbs import generate_prime, blum_blum_shub
 from rsa.rsa import RSA
 from Crypto.Random import get_random_bytes
 
+import time
+
 
 # uses the same RSA passed from Task 1
 def task_three(rsa: RSA):
@@ -11,7 +13,12 @@ def task_three(rsa: RSA):
 
     print(f"{encrypted=}")
 
-    decrypted = rsa.decrypt(encrypted)
+    start = time.perf_counter()
+
+    decrypted = rsa.decrypt_crt(encrypted).decode()
+    end = time.perf_counter()
+    print("RSA Decryption Time:", end - start, "seconds")
+
     print(f"{decrypted=}")
 
     # PT 2. AES Encryption with RSA

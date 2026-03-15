@@ -23,17 +23,17 @@ def task_four(rsa: RSA, aes: AES256):
     # parse the image to file bytes to convert
     with open("task_four/tea.jpg", "rb") as f:
         image_bytes = f.read()
-        print(f"image_bytes={image_bytes}")
-
         # Bytes converted to cipher
         cipher = aes.encrypt(image_bytes)
+
+        with open("task_four/cipher.jpg", "wb") as cf:
+            cf.write(cipher)
 
         # 2. Transmission and Decryption: [10]
         # Simulate the transmission by saving the encrypted image data and decrypting it on the
         # receiver’s end.
 
         image_encrypted = aes.decrypt(cipher)
-        print(f"{image_encrypted=}")
 
     # Write to a new file
     with open("task_four/tea_decrypted.jpg", "wb") as f:

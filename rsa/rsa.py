@@ -21,10 +21,14 @@ class RSA:
         self.n = None
         self.e = 65537
         self.d = None
+        self.p = None
+        self.q = None
 
     def generate_keys(self):
         p, q = self.select_primes()
 
+        self.p = p
+        self.q = q
         self.n = p * q
         phi_n = (p - 1) * (q - 1)
 
@@ -40,6 +44,24 @@ class RSA:
         byte_length = (m.bit_length() + 7) // 8
         return m.to_bytes(byte_length, "big")
 
+    def decrypt_crt(self, cipher):
+        # plaintext = cipher ^ d (mod(p,q))
+        # gcd(p,q) = 1
+        # plaintext = q^p-1 (modn)
+        # mp = cipher ^ d (mod p)
+        # mq = cipher ^ d (mod q)
+
+        dp = self.d % (self.p - 1)
+        dq = self.d % (self.q - 1)
+        q_inv = pow(self.q, -1, self.p)
+
+        mp = pow(cipher, dp, self.p)
+        mq = pow(cipher, dq, self.q)
+
+        h = (q_inv * (mp - mq)) % self.p
+        message = mq + h * self.q
+        return message.to_bytes((message.bit_length() + 7) // 8, "big")
+
     def convert_string_to_int(self, message):
         if isinstance(message, bytes):
             return int.from_bytes(message, "big")
@@ -50,7 +72,6 @@ class RSA:
         raise TypeError("Message must be str or bytes")
 
     def extended_euclidean_algorithm(self, a, b) -> int:
-
         row_index = -1
         x = [1, 0]
         y = [0, 1]
