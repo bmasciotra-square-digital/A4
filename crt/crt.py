@@ -1,5 +1,0 @@
-def crt():
-
-
-
-    pass
