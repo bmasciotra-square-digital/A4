@@ -4,6 +4,8 @@ from rsa.rsa import RSA
 
 
 def task_five(rsa: RSA):
+    print("----- Task 5 -----")
+
     # CRT Implementation: [10]
     # Implement CRT to reduce computational overhead during RSA.
     # Demonstrate the speedup by running comparisons between standard RSA decryption and

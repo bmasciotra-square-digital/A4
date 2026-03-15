@@ -6,7 +6,9 @@ from aes.aes import AES256
 from rsa.rsa import RSA
 
 
-def task_four(rsa: RSA, aes: AES256):
+def task_four(aes: AES256):
+    print("----- Task 4 -----")
+
     # Encrypt an image file and send it securely between clients using the AES key generated and exchanged in
     # Tasks 2 and 3.
 

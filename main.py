@@ -13,5 +13,5 @@ if __name__ == '__main__':
 
     # Task Three
     task_three(rsa)
-    task_four(rsa, aes)
+    task_four(aes)
     task_five(rsa)

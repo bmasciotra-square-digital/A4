@@ -1,21 +1,21 @@
 from bbs.bbs import generate_prime, blum_blum_shub
 from rsa.rsa import RSA
-from Crypto.Random import get_random_bytes
 
 import time
 
 
 # uses the same RSA passed from Task 1
 def task_three(rsa: RSA):
+    print("----- Task 3 -----")
     # PT 1. Encrypt and decrypt example
     message = "hello world"
     encrypted = rsa.encrypt(message)
-
+    print(f"Message: {message}")
     print(f"{encrypted=}")
 
     start = time.perf_counter()
 
-    decrypted = rsa.decrypt_crt(encrypted).decode()
+    decrypted = rsa.decrypt(encrypted).decode()
     end = time.perf_counter()
     print("RSA Decryption Time:", end - start, "seconds")
 

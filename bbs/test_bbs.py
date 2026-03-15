@@ -89,11 +89,6 @@ def test_run(setup):
 # 6 | 5.2177052  | 2.954
 # 7 | 6.1962507  | 3.125
 def test_maurer_universal(large_prime, l: int = 3):
-    """
-    :param large_prime:
-    :param l: the size of the block in which we are testing the pattern
-    :return:
-    """
     bit_string = format(large_prime, "02048b")
     n = len(bit_string)
 

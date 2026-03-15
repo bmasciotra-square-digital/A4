@@ -16,6 +16,7 @@ def task_two():
     message = "hello world"
     aes = AES256(key, iv)
 
+    print(f"{message=}")
     encrypted = aes.encrypt(message.encode())
     print(f"{encrypted=}")
 
